@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+    <style name="toolbar_title_style" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="textInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxBackgroundColor">@color/box_background</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/textInputLayoutRadius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/textInputLayoutRadius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/textInputLayoutRadius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/textInputLayoutRadius</item>
+        <item name="android:textColorHint">@android:color/black</item>
+    </style>
+
+    <style name="signButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>
