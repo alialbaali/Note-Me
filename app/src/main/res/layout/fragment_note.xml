@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/box_background"
+                android:gravity="fill_vertical"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:backgroundTint="@color/box_background"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="?attr/actionBarTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:titleTextAppearance="@style/toolbar_title_style">
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <EditText
+                    android:id="@+id/title_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="0"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto"
+                    android:hint="@string/title"
+                    android:inputType="textAutoCorrect|textMultiLine|text|textAutoComplete"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    app:fontFamily="@font/roboto" />
+
+            <EditText
+                    android:id="@+id/content_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="top"
+                    android:hint="@string/note"
+                    android:inputType="textAutoCorrect|textMultiLine|text|textAutoComplete"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    app:fontFamily="@font/roboto_light" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</layout>
