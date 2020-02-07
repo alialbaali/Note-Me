@@ -1,8 +1,8 @@
-package com.apps.noteme.signInUI
+package com.apps.noteMe.signInUI
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.apps.noteme.database.UserDao
+import com.apps.noteMe.database.UserDao
 
 class SignInViewModelFactory(
     private val userDao: UserDao

@@ -1,25 +1,26 @@
-package com.apps.noteme.database
+package com.apps.noteMe.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-
 @Entity(tableName = "notes")
-
-class Note(
+data class Note(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long = -1,
+    val id: Long = 0L,
+
+    @ColumnInfo(name = "user_id")
+    val userId: Long = 0L,
 
     @ColumnInfo(name = "title")
     var title: String? = null,
 
-    @ColumnInfo(name = "Body")
+    @ColumnInfo(name = "content")
     var content: String? = null,
 
-    @ColumnInfo(name = "isPinned")
+    @ColumnInfo(name = "is_pinned")
     var isPinned: Boolean = false
 
 //    @ColumnInfo(name = "createdAt")

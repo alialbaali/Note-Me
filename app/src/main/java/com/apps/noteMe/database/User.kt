@@ -1,4 +1,4 @@
-package com.apps.noteme.database
+package com.apps.noteMe.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
 
-class User(
+data class User(
 
     @PrimaryKey(autoGenerate = true)
     val id: Long = -1,
@@ -17,7 +17,7 @@ class User(
     @ColumnInfo(name = "password")
     var password: String,
 
-    @ColumnInfo(name = "emailAddress")
+    @ColumnInfo(name = "email_address")
     var emailAddress: String
 
 )

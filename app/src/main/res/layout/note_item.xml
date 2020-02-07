@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
     </data>
 
     <LinearLayout
@@ -20,7 +19,6 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/roboto"
-                android:text="@string/title"
                 android:textSize="25sp" />
 
         <TextView
@@ -32,7 +30,6 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/roboto_light"
-                android:text="@string/note"
                 android:textSize="15sp" />
     </LinearLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.apps.noteme.signInUI
+package com.apps.noteMe.signInUI
 
 
 import android.os.Bundle
@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.apps.noteme.R
-import com.apps.noteme.database.AppDatabase
-import com.apps.noteme.databinding.FragmentSignInBinding
+import com.apps.noteMe.R
+import com.apps.noteMe.database.AppDatabase
+import com.apps.noteMe.databinding.FragmentSignInBinding
 
 class SignInFragment : Fragment() {
     // binding variable

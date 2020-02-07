@@ -1,4 +1,4 @@
-package com.apps.noteme
+package com.apps.noteMe
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.apps.noteme", appContext.packageName)
+        assertEquals("com.apps.noteMe", appContext.packageName)
     }
 }

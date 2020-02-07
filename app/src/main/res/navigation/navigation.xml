@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation"
         app:startDestination="@id/listFragment">
     <fragment
             android:id="@+id/listFragment"
-            android:name="com.apps.noteme.listUI.ListFragment"
+            android:name="com.apps.noteMe.listUI.ListFragment"
             android:label="ListFragment"
-            tools:layout="@layout/fragment_list">
+            tools:layout="@layout/fragment_list" >
         <action
                 android:id="@+id/action_listFragment_to_noteFragment"
-                app:destination="@id/noteFragment" />
+                app:destination="@id/noteFragment"
+                app:enterAnim="@anim/fragment_open_enter"
+                app:exitAnim="@anim/fragment_open_exit"
+                app:popEnterAnim="@anim/fragment_open_enter"
+                app:popExitAnim="@anim/fragment_open_exit" />
     </fragment>
     <fragment
             android:id="@+id/noteFragment"
-            android:name="com.apps.noteme.NoteUI.NoteFragment"
+            android:name="com.apps.noteMe.noteUI.NoteFragment"
             android:label="NoteFragment"
-            tools:layout="@layout/fragment_note">
+            tools:layout="@layout/fragment_note" >
         <action
                 android:id="@+id/action_noteFragment_to_listFragment"
-                app:destination="@id/listFragment" />
+                app:destination="@id/listFragment"
+                app:enterAnim="@anim/fragment_open_enter"
+                app:exitAnim="@anim/fragment_open_exit"
+                app:popEnterAnim="@anim/fragment_open_enter"
+                app:popExitAnim="@anim/fragment_open_exit"
+                app:popUpTo="@+id/listFragment"
+                app:popUpToInclusive="true" />
+        <argument
+                android:name="id"
+                app:argType="long" />
     </fragment>
 </navigation>

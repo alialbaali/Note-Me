@@ -7,7 +7,7 @@
 
         <variable
                 name="signUpViewModel"
-                type="com.apps.noteme.signUpUI.SignUpViewModel" />
+                type="com.apps.noteMe.signUpUI.SignUpViewModel" />
     </data>
 
 

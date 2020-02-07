@@ -1,4 +1,4 @@
-package com.apps.noteme.database
+package com.apps.noteMe.database
 
 import android.content.Context
 import androidx.room.Database

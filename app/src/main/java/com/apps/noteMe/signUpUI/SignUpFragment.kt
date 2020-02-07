@@ -1,4 +1,4 @@
-package com.apps.noteme.signUpUI
+package com.apps.noteMe.signUpUI
 
 
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.apps.noteme.R
+import com.apps.noteMe.R
 
 /**
  * A simple [Fragment] subclass.

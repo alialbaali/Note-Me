@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+                name="viewModel"
+                type="com.apps.noteMe.SharedViewModel" />
+    </data>
 
     <ScrollView
             android:layout_width="match_parent"
@@ -40,6 +46,7 @@
                     android:layout_weight="0"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:text="@={viewModel.title}"
                     android:fontFamily="@font/roboto"
                     android:hint="@string/title"
                     android:inputType="textAutoCorrect|textMultiLine|text|textAutoComplete"
@@ -63,9 +70,11 @@
                     android:inputType="textAutoCorrect|textMultiLine|text|textAutoComplete"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    android:text="@={viewModel.content}"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
                     app:fontFamily="@font/roboto_light" />
+
         </LinearLayout>
     </ScrollView>
 

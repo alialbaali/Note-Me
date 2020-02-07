@@ -1,9 +1,9 @@
-package com.apps.noteme
+package com.apps.noteMe
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.apps.noteme.databinding.ActivityMainBinding
+import com.apps.noteMe.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
