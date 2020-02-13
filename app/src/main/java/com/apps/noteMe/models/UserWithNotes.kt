@@ -1,7 +1,9 @@
-package com.apps.noteMe.database
+package com.apps.noteMe.models
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.apps.noteMe.models.Note
+import com.apps.noteMe.models.User
 
 data class UserWithNotes(
     @Embedded val user: User,

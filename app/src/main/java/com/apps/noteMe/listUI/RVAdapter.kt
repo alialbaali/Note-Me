@@ -3,11 +3,11 @@ package com.apps.noteMe.listUI
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.apps.noteMe.database.Note
+import com.apps.noteMe.models.Note
 import com.apps.noteMe.databinding.NoteItemBinding
-import timber.log.Timber
 
 
 // RecyclerView Adapter
@@ -22,16 +22,27 @@ class RVAdapter(private val noteListener: NoteListener) : ListAdapter<Note, Item
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
+        holder.id = item.id
+    }
+
+    fun onItemMove(fromPosition: Int, toPosition: Int) {
+       noteListener.onNoteMove(fromPosition, toPosition)
+    }
+
+    fun onItemSwipe(position: Int) {
+        noteListener.onNoteSwipe(getItem(position))
     }
 }
 
 // ViewHolder class for list_item.xml
 class ItemViewHolder private constructor(private val binding: NoteItemBinding, private val noteListener: NoteListener) : RecyclerView.ViewHolder(binding.root) {
 
+    // value to keep track of the note id
+    var id = 0L
     init {
         binding.root.setOnClickListener {
-            noteListener.onNoteClick(adapterPosition.toLong().inc())
-            }
+            noteListener.onNoteClick(id)
+        }
     }
 
     companion object {
@@ -48,6 +59,8 @@ class ItemViewHolder private constructor(private val binding: NoteItemBinding, p
 
 interface NoteListener {
     fun onNoteClick(id: Long)
+    fun onNoteMove(fromPosition: Int, toPosition: Int)
+    fun onNoteSwipe(note: Note)
 }
 
 
@@ -61,3 +74,22 @@ private class ItemDiffCallback : DiffUtil.ItemCallback<Note>() {
         return oldItem == newItem
     }
 }
+
+class ItemTouchHelperAdapter(private val RVAdapter: RVAdapter) : ItemTouchHelper.Callback(){
+
+    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        val swipeFlags= ItemTouchHelper.START or ItemTouchHelper.END
+        return makeMovementFlags(dragFlags, swipeFlags)
+    }
+
+    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+        RVAdapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+        return true
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        RVAdapter.onItemSwipe(viewHolder.adapterPosition)
+    }
+}
+

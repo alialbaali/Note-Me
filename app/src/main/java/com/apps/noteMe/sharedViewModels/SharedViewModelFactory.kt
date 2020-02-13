@@ -1,4 +1,4 @@
-package com.apps.noteMe
+package com.apps.noteMe.sharedViewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

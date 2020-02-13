@@ -1,6 +1,8 @@
 package com.apps.noteMe.database
 
 import androidx.room.*
+import com.apps.noteMe.models.User
+import com.apps.noteMe.models.UserWithNotes
 
 @Dao
 interface UserDao {

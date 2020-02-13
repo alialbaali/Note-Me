@@ -1,11 +1,11 @@
-package com.apps.noteMe
+package com.apps.noteMe.sharedViewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apps.noteMe.database.Note
 import com.apps.noteMe.database.NoteDao
+import com.apps.noteMe.models.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -15,8 +15,10 @@ class SharedViewModel(private val noteDao: NoteDao) : ViewModel() {
     lateinit var notes: LiveData<List<Note>>
 
     private var isItNewNote = false
-    private lateinit var currentNote: Note
 
+    val currentNote = MutableLiveData<Note>()
+
+    val selectedItem = mutableListOf<Note>()
 
     init {
         viewModelScope.launch(context = Dispatchers.IO) {
@@ -25,24 +27,28 @@ class SharedViewModel(private val noteDao: NoteDao) : ViewModel() {
     }
 
 
-    val title = MutableLiveData<String>()
-    val content = MutableLiveData<String>()
-
-    fun delete() {
-
+    fun delete(note: Note?) {
+        viewModelScope.launch(context = Dispatchers.IO) {
+            if (note == null) {
+                if (!isItNewNote) {
+                    noteDao.deleteNote(currentNote.value!!)
+                }
+            } else {
+                noteDao.deleteNote(note)
+            }
+        }
     }
 
     fun save() {
-
-        currentNote.title = title.value
-        currentNote.content = content.value
-
-        if (isItNewNote) {
-            insert(currentNote)
+        if (!(currentNote.value?.title.isNullOrBlank() && currentNote.value?.content.isNullOrBlank())) {
+            if (isItNewNote) {
+                insert(currentNote.value!!)
+            } else {
+                update(currentNote.value!!)
+            }
         } else {
-            update(currentNote)
+            currentNote.value = null
         }
-
     }
 
     private fun update(note: Note) {
@@ -51,22 +57,19 @@ class SharedViewModel(private val noteDao: NoteDao) : ViewModel() {
         }
     }
 
-    private fun insert(note: Note) {
+    fun insert(note: Note) {
         viewModelScope.launch(context = Dispatchers.IO) {
             noteDao.insertNote(note)
         }
     }
 
-
     fun getNoteById(id: Long) {
         if (id == 0L) {
-            currentNote = Note()
+            currentNote.value = Note()
             isItNewNote = true
         } else {
             viewModelScope.launch(context = Dispatchers.IO) {
-                currentNote = noteDao.getNoteById(id)
-                title.postValue(currentNote.title)
-                content.postValue(currentNote.content)
+                currentNote.postValue(noteDao.getNoteById(id))
                 isItNewNote = false
             }
         }

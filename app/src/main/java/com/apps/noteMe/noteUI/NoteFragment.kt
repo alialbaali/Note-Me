@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.apps.noteMe.R
-import com.apps.noteMe.SharedViewModel
-import com.apps.noteMe.SharedViewModelFactory
+import com.apps.noteMe.sharedViewModels.SharedViewModel
+import com.apps.noteMe.sharedViewModels.SharedViewModelFactory
 import com.apps.noteMe.database.AppDatabase
-import com.apps.noteMe.database.Note
 import com.apps.noteMe.databinding.FragmentNoteBinding
-import timber.log.Timber
+import com.google.android.material.snackbar.Snackbar
 
 
 class NoteFragment : Fragment() {
@@ -27,12 +27,20 @@ class NoteFragment : Fragment() {
 
         val dataSource = AppDatabase.getInstance(application).noteDao
 
-        val viewModelFactory = SharedViewModelFactory(dataSource)
+        val viewModelFactory =
+            SharedViewModelFactory(dataSource)
 
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(SharedViewModel::class.java)
 
+        // Implement custom onBackPressed action
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToListFragment())
+            viewModel.save()
+        }.isEnabled = true
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,21 +60,24 @@ class NoteFragment : Fragment() {
 
         viewModel.getNoteById(id)
 
+        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+            viewModel.save()
+        }
+
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.save -> {
-                    findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToListFragment())
-                    viewModel.save()
-                    true
-                }
                 R.id.delete -> {
-                    viewModel.delete()
+                    findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToListFragment())
+                    viewModel.delete(null)
+                    Snackbar.make(view!!, R.string.note_deleted_message, Snackbar.LENGTH_SHORT).show()
                     true
                 }
                 else -> true
             }
         }
-
         return binding.root
     }
 
