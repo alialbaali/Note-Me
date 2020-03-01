@@ -24,6 +24,8 @@
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
+                    app:menu="@menu/note_menu"
+                    app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/colorPrimary"

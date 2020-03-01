@@ -4,15 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.apps.noteMe.models.Note
-import com.apps.noteMe.models.User
+import com.apps.noteMe.model.Note
+import com.apps.noteMe.model.UserId
 
-@Database(entities = [User::class, Note::class], version = 1, exportSchema = false)
+@Database(entities = [Note::class, UserId::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
 
     abstract val noteDao: NoteDao
-    abstract val userDao: UserDao
+    abstract val userIdDao: UserIdDao
 
     companion object {
         @Volatile

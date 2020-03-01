@@ -1,4 +1,4 @@
-package com.apps.noteMe.listUI
+package com.apps.noteMe.adatper
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.apps.noteMe.models.Note
+import com.apps.noteMe.R
+import com.apps.noteMe.model.Note
 import com.apps.noteMe.databinding.NoteItemBinding
 
 
@@ -27,10 +28,12 @@ class RVAdapter(private val noteListener: NoteListener) : ListAdapter<Note, Item
 
     fun onItemMove(fromPosition: Int, toPosition: Int) {
        noteListener.onNoteMove(fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 
     fun onItemSwipe(position: Int) {
         noteListener.onNoteSwipe(getItem(position))
+        notifyItemRemoved(position)
     }
 }
 
@@ -78,7 +81,7 @@ private class ItemDiffCallback : DiffUtil.ItemCallback<Note>() {
 class ItemTouchHelperAdapter(private val RVAdapter: RVAdapter) : ItemTouchHelper.Callback(){
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
         val swipeFlags= ItemTouchHelper.START or ItemTouchHelper.END
         return makeMovementFlags(dragFlags, swipeFlags)
     }
@@ -91,5 +94,17 @@ class ItemTouchHelperAdapter(private val RVAdapter: RVAdapter) : ItemTouchHelper
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         RVAdapter.onItemSwipe(viewHolder.adapterPosition)
     }
+
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        super.onSelectedChanged(viewHolder, actionState)
+        viewHolder?.itemView?.setBackgroundResource(R.drawable.note_shape_selected)
+    }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        super.clearView(recyclerView, viewHolder)
+        viewHolder.itemView.setBackgroundResource(R.drawable.note_shape)
+    }
+
+
 }
 

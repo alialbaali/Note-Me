@@ -4,72 +4,63 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apps.noteMe.database.NoteDao
-import com.apps.noteMe.models.Note
+import com.apps.noteMe.model.Note
+import com.apps.noteMe.repo.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class SharedViewModel(private val noteDao: NoteDao) : ViewModel() {
+class SharedViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
-    lateinit var notes: LiveData<List<Note>>
+
+    lateinit var notes: LiveData<MutableList<Note>>
 
     private var isItNewNote = false
 
     val currentNote = MutableLiveData<Note>()
 
-    val selectedItem = mutableListOf<Note>()
+//    val selectedItem = mutableListOf<Note>()
 
     init {
         viewModelScope.launch(context = Dispatchers.IO) {
-            notes = noteDao.getNotes()
+            notes = noteRepository.getNotes()
         }
     }
 
 
     fun delete(note: Note?) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = Dispatchers.Main) {
             if (note == null) {
                 if (!isItNewNote) {
-                    noteDao.deleteNote(currentNote.value!!)
+                    noteRepository.deleteNote(currentNote.value!!)
                 }
             } else {
-                noteDao.deleteNote(note)
+                noteRepository.deleteNote(note)
             }
         }
     }
 
     fun save() {
-        if (!(currentNote.value?.title.isNullOrBlank() && currentNote.value?.content.isNullOrBlank())) {
-            if (isItNewNote) {
-                insert(currentNote.value!!)
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!(currentNote.value?.title.isNullOrBlank() && currentNote.value?.content.isNullOrBlank())) {
+                if (isItNewNote) {
+                    noteRepository.insertNote(currentNote.value!!)
+                } else {
+                    noteRepository.updateNote(currentNote.value!!)
+                }
             } else {
-                update(currentNote.value!!)
+                currentNote.value = null
             }
-        } else {
-            currentNote.value = null
-        }
-    }
-
-    private fun update(note: Note) {
-        viewModelScope.launch(context = Dispatchers.IO) {
-            noteDao.updateNote(note)
-        }
-    }
-
-    fun insert(note: Note) {
-        viewModelScope.launch(context = Dispatchers.IO) {
-            noteDao.insertNote(note)
         }
     }
 
     fun getNoteById(id: Long) {
-        if (id == 0L) {
-            currentNote.value = Note()
-            isItNewNote = true
-        } else {
-            viewModelScope.launch(context = Dispatchers.IO) {
-                currentNote.postValue(noteDao.getNoteById(id))
+        viewModelScope.launch(Dispatchers.Main) {
+            if (id == 0L) {
+                currentNote.value = Note(userId = noteRepository.userIdDao.getUserId().id)
+                isItNewNote = true
+            } else {
+                currentNote.postValue(noteRepository.getNoteById(id))
                 isItNewNote = false
             }
         }

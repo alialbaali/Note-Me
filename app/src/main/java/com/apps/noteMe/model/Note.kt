@@ -1,4 +1,4 @@
-package com.apps.noteMe.models
+package com.apps.noteMe.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

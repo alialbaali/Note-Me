@@ -8,7 +8,7 @@
     <string name="firstName">First name</string>
     <string name="lastName">Last name</string>
     <string name="signUp">Sign Up</string>
-    <string name="createAccount"><u>Create account</u></string>
+    <string name="createAccount">Create account</string>
     <string name="signIn">Sign In</string>
     <string name="account">don\'t have account?</string>
     <string name="intro">Organizing your life has been easier</string>
@@ -16,7 +16,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">Name</string>
-    <string name="haveAccount">Have account? Sign in</string>
+    <string name="haveAccount"><u>Have account? Sign in</u></string>
     <string name="title">Title</string>
     <string name="note">Note</string>
     <string name="share">Share</string>
@@ -24,4 +24,6 @@
     <string name="save">Save</string>
     <string name="search">Search</string>
     <string name="note_deleted_message">Note has been deleted</string>
+    <string name="share_title">Share note with</string>
+    <string name="signUpLayout_intro">Welcome to Note Me</string>
 </resources>
