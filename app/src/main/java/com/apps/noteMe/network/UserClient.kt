@@ -1,10 +1,7 @@
 package com.apps.noteMe.network
 
 import com.apps.noteMe.model.User
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface UserClient {
 
@@ -12,10 +9,10 @@ interface UserClient {
     suspend fun getUsers(): List<User>
 
     @POST("user-service/sign-up")
-    suspend fun signUp(@Body user: User): Long
+    suspend fun signUp(@Header("Authorization") value: String, @Body user: User): Long
 
     @POST("user-service/sign-in")
-    suspend fun signIn(@Body user: User): Long
+    suspend fun signIn(@Header("Authorization") value: String, @Body user: User): Long
 
     @POST("user-service/delete-user")
     suspend fun updateUser(@Body user: User): Long?

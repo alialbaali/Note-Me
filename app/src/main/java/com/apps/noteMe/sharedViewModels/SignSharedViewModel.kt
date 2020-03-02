@@ -1,5 +1,6 @@
 package com.apps.noteMe.sharedViewModels
 
+import android.util.Base64
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +25,10 @@ class SignSharedViewModel(private val userRepository: UserRepository) : ViewMode
     fun signUp() {
         viewModelScope.launch(Dispatchers.Main) {
             try {
-                val id = userRepository.signUp(currentUser.value!!)
+                val value = Base64.encodeToString(
+                    "${currentUser.value?.email}:${currentUser.value?.password}".toByteArray(), Base64.NO_WRAP)
+
+                val id = userRepository.signUp(value, currentUser.value!!)
                 userRepository.userIdDao.insertUserId(UserId(id))
                 signNavigation.navigate()
             } catch (e: HttpException) {
@@ -37,7 +41,10 @@ class SignSharedViewModel(private val userRepository: UserRepository) : ViewMode
     fun signIn() {
         viewModelScope.launch(Dispatchers.Main) {
             try {
-                val id = userRepository.signIn(currentUser.value!!)
+                val value = Base64.encodeToString(
+                    "${currentUser.value?.email}:${currentUser.value?.password}".toByteArray(), Base64.NO_WRAP)
+
+                val id = userRepository.signIn(value, currentUser.value!!)
                 userRepository.userIdDao.insertUserId(UserId(id))
                 signNavigation.navigate()
             } catch (e: HttpException) {

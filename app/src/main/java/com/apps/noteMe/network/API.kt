@@ -16,7 +16,7 @@ private const val BASE_URL = "http://192.168.1.100:8080/"
 
 private val logger by lazy {
     HttpLoggingInterceptor().apply {
-        this.level = HttpLoggingInterceptor.Level.BASIC
+        this.level = HttpLoggingInterceptor.Level.BODY
     }
 }
 

@@ -9,15 +9,15 @@ import kotlinx.coroutines.withContext
 
 class UserRepository(val userIdDao: UserIdDao, private val userClient: UserClient) {
 
-    suspend fun signUp(user: User): Long {
+    suspend fun signUp(value : String,user: User): Long {
         return withContext(Dispatchers.IO) {
-            userClient.signUp(user)
+            userClient.signUp("Basic $value", user)
         }
     }
 
-    suspend fun signIn(user: User): Long {
+    suspend fun signIn(value: String,user: User): Long {
         return withContext(Dispatchers.IO) {
-            userClient.signIn(user)
+            userClient.signIn("Basic $value", user)
         }
     }
 
