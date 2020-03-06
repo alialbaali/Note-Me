@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/navigation"
-        app:startDestination="@id/sign_graph">
+        app:startDestination="@id/listFragment">
     <fragment
             android:id="@+id/listFragment"
             android:name="com.apps.noteMe.ui.ListFragment"
@@ -49,7 +49,10 @@
                 tools:layout="@layout/fragment_sign_up" >
             <action
                     android:id="@+id/action_signUpFragment_to_signInFragment"
-                    app:destination="@id/signInFragment" />
+                    app:destination="@id/signInFragment"
+                    app:launchSingleTop="true"
+                    app:popUpTo="@id/signInFragment"
+                    app:popUpToInclusive="false" />
         </fragment>
         <fragment
                 android:id="@+id/signInFragment"
@@ -58,7 +61,10 @@
                 tools:layout="@layout/fragment_sign_in" >
             <action
                     android:id="@+id/action_signInFragment_to_signUpFragment"
-                    app:destination="@id/signUpFragment" />
+                    app:destination="@id/signUpFragment"
+                    app:launchSingleTop="true"
+                    app:popUpTo="@id/signUpFragment"
+                    app:popUpToInclusive="false" />
         </fragment>
         <action
                 android:id="@+id/action_global_listFragment"
