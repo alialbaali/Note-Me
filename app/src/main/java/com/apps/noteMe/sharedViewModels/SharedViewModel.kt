@@ -13,16 +13,14 @@ import kotlinx.coroutines.launch
 class SharedViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
 
-    lateinit var notes: LiveData<MutableList<Note>>
-
+    lateinit var notes: LiveData<List<Note>>
     private var isItNewNote = false
 
     val currentNote = MutableLiveData<Note>()
 
-//    val selectedItem = mutableListOf<Note>()
-
     init {
         viewModelScope.launch(context = Dispatchers.IO) {
+            //            notes = noteRepository.getNotes()
             notes = noteRepository.getNotes()
         }
     }
@@ -44,20 +42,32 @@ class SharedViewModel(private val noteRepository: NoteRepository) : ViewModel() 
         viewModelScope.launch(Dispatchers.IO) {
             if (!(currentNote.value?.title.isNullOrBlank() && currentNote.value?.content.isNullOrBlank())) {
                 if (isItNewNote) {
-                    noteRepository.insertNote(currentNote.value!!)
+                    insertNote(currentNote.value!!)
                 } else {
-                    noteRepository.updateNote(currentNote.value!!)
+                    updateNote(currentNote.value!!)
                 }
             } else {
-                currentNote.value = null
+                currentNote.postValue(null)
             }
+        }
+    }
+
+    private fun insertNote(note: Note) {
+        viewModelScope.launch(Dispatchers.Main) {
+            noteRepository.insertNote(note)
+        }
+    }
+
+    private fun updateNote(note: Note) {
+        viewModelScope.launch(Dispatchers.Main) {
+            noteRepository.updateNote(note)
         }
     }
 
     fun getNoteById(id: Long) {
         viewModelScope.launch(Dispatchers.Main) {
             if (id == 0L) {
-                currentNote.value = Note(userId = noteRepository.userIdDao.getUserId().id)
+                currentNote.value = Note(noteListId = 0)
                 isItNewNote = true
             } else {
                 currentNote.postValue(noteRepository.getNoteById(id))
