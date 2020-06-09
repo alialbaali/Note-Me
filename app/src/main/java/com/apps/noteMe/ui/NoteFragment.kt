@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.apps.noteMe.R
@@ -17,6 +18,7 @@ import com.apps.noteMe.network.Repos
 import com.apps.noteMe.sharedViewModels.SharedViewModel
 import com.apps.noteMe.sharedViewModels.SharedViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 
 class NoteFragment : Fragment() {
@@ -29,7 +31,8 @@ class NoteFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DAOs.noteDao = AppDatabase.getInstance(context!!).noteDao
-        viewModel = ViewModelProviders.of(this, SharedViewModelFactory(Repos.noteRepository))
+        DAOs.noteListDao = AppDatabase.getInstance(context!!).noteListDao
+        viewModel = ViewModelProviders.of(this, SharedViewModelFactory(Repos.noteRepository, Repos.noteListRepository))
             .get(SharedViewModel::class.java)
     }
 
@@ -59,6 +62,10 @@ class NoteFragment : Fragment() {
             findNavController().navigateUp()
             viewModel.save()
         }
+
+        viewModel.currentNote.observe(viewLifecycleOwner, Observer {
+            Timber.i(it.toString())
+        })
 
 
 

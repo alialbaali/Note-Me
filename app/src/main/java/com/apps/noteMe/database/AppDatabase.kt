@@ -5,12 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.apps.noteMe.model.Note
+import com.apps.noteMe.model.NoteList
 import com.apps.noteMe.model.UserId
 
-@Database(entities = [Note::class, UserId::class], version = 2, exportSchema = false)
+@Database(
+    entities = [NoteList::class, Note::class, UserId::class],
+    version = 2,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
-
+    abstract val noteListDao: NoteListDao
     abstract val noteDao: NoteDao
     abstract val userIdDao: UserIdDao
 
@@ -25,10 +30,10 @@ abstract class AppDatabase : RoomDatabase() {
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        AppDatabase::class.java,
-                        "AppDatabase"
-                    )
+                            context.applicationContext,
+                            AppDatabase::class.java,
+                            "AppDatabase"
+                        )
                         .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance

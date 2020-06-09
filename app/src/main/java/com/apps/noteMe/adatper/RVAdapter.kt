@@ -3,33 +3,31 @@ package com.apps.noteMe.adatper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.apps.noteMe.R
 import com.apps.noteMe.databinding.NoteItemBinding
 import com.apps.noteMe.model.Note
 
 
 // RecyclerView Adapter
 class RVAdapter(private val noteListener: NoteListener) :
-    ListAdapter<Note, ItemViewHolder>(ItemDiffCallback()) {
+    ListAdapter<Note, NoteItemViewHolder>(NoteItemCallback()) {
 
     // function for creating ViewHolder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder.createViewHolder(parent, noteListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteItemViewHolder {
+        return NoteItemViewHolder.createViewHolder(parent, noteListener)
     }
 
     // function for binding ViewHolder
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holderNote: NoteItemViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
-        holder.id = item.id
+        holderNote.bind(item)
+        holderNote.id = item.id
     }
 }
 
 // ViewHolder class for list_item.xml
-class ItemViewHolder private constructor(
+class NoteItemViewHolder private constructor(
     private val binding: NoteItemBinding,
     private val noteListener: NoteListener
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -44,8 +42,8 @@ class ItemViewHolder private constructor(
     }
 
     companion object {
-        fun createViewHolder(parent: ViewGroup, noteListener: NoteListener): ItemViewHolder {
-            return ItemViewHolder(
+        fun createViewHolder(parent: ViewGroup, noteListener: NoteListener): NoteItemViewHolder {
+            return NoteItemViewHolder(
                 NoteItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -66,7 +64,7 @@ interface NoteListener {
 }
 
 
-private class ItemDiffCallback : DiffUtil.ItemCallback<Note>() {
+private class NoteItemCallback : DiffUtil.ItemCallback<Note>() {
 
     override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
         return oldItem.id == newItem.id

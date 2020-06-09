@@ -14,7 +14,7 @@ class NoteRepository(
     private val noteClient: NoteClient
 ) {
 
-    suspend fun getNotes(): LiveData<MutableList<Note>> {
+    suspend fun getNotes(): LiveData<List<Note>> {
         return withContext(Dispatchers.IO) {
             //            noteClient.getNotes(userIdDao.getUserId().id)
             noteDao.getNotes()

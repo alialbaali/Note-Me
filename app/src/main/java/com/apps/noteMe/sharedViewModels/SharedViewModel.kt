@@ -5,14 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apps.noteMe.model.Note
+import com.apps.noteMe.model.NoteList
+import com.apps.noteMe.repo.NoteListRepository
 import com.apps.noteMe.repo.NoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class SharedViewModel(private val noteRepository: NoteRepository) : ViewModel() {
+class SharedViewModel(
+    private val noteRepository: NoteRepository,
+    private val noteListRepository: NoteListRepository
+) : ViewModel() {
 
-
+    val noteList = MutableLiveData<NoteList>()
     lateinit var notes: LiveData<List<Note>>
     private var isItNewNote = false
 
@@ -20,7 +25,8 @@ class SharedViewModel(private val noteRepository: NoteRepository) : ViewModel() 
 
     init {
         viewModelScope.launch(context = Dispatchers.IO) {
-            //            notes = noteRepository.getNotes()
+                        notes = noteRepository.getNotes()
+//            noteList.postValue(noteListRepository.getNoteListById(id = 0))
             notes = noteRepository.getNotes()
         }
     }
@@ -75,4 +81,34 @@ class SharedViewModel(private val noteRepository: NoteRepository) : ViewModel() 
             }
         }
     }
+
+    fun insertNoteList(noteList: NoteList) {
+        viewModelScope.launch {
+            noteListRepository.insertNoteList(noteList)
+        }
+    }
+
+    fun updateNoteList(noteList: NoteList) {
+        viewModelScope.launch {
+            noteListRepository.updateNoteList(noteList)
+        }
+    }
+
+//    fun getNoteListById(id: Long): NoteList {
+//        viewModelScope.launch {
+//            noteListRepository.getNoteListById(id)
+//        }
+//    }
+
+    fun deleteNoteList(noteList: NoteList) {
+        viewModelScope.launch {
+            noteListRepository.deleteNoteList(noteList)
+        }
+    }
+//
+//    fun getNoteLists() : List<NoteList> {
+//         viewModelScope.launch {
+//         return@launch   noteListRepository.getNoteLists()
+//        }
+//    }
 }

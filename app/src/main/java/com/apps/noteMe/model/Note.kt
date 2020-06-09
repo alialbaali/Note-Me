@@ -21,7 +21,10 @@ data class Note(
     var content: String? = null,
 
     @ColumnInfo(name = "is_pinned")
-    var isPinned: Boolean = false
+    var isPinned: Boolean = false,
+
+    @ColumnInfo(name = "note_list_id")
+    var noteListId : Long
 
 //    @ColumnInfo(name = "createdAt")
 //    var createdAt: Date = Date(),

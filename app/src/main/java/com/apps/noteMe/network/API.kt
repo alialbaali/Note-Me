@@ -1,7 +1,9 @@
 package com.apps.noteMe.network
 
 import com.apps.noteMe.database.NoteDao
+import com.apps.noteMe.database.NoteListDao
 import com.apps.noteMe.database.UserIdDao
+import com.apps.noteMe.repo.NoteListRepository
 import com.apps.noteMe.repo.NoteRepository
 import com.apps.noteMe.repo.UserRepository
 import com.squareup.moshi.Moshi
@@ -10,7 +12,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import timber.log.Timber
 
 private const val BASE_URL = "http://192.168.1.100:8080/"
 
@@ -40,18 +41,16 @@ private val retrofit: Retrofit by lazy {
 
 private object Clients {
     val userClient: UserClient by lazy {
-//        Timber.i("userClient init")
         retrofit.create(UserClient::class.java)
     }
-
     val noteClient: NoteClient by lazy {
-//        Timber.i("noteClient init")
         retrofit.create(NoteClient::class.java)
     }
 }
 
 object DAOs {
     lateinit var noteDao: NoteDao
+    lateinit var noteListDao: NoteListDao
     lateinit var userIdDao: UserIdDao
 }
 
@@ -61,5 +60,8 @@ object Repos {
     }
     val noteRepository: NoteRepository by lazy {
         NoteRepository(DAOs.userIdDao, DAOs.noteDao, Clients.noteClient)
+    }
+    val noteListRepository: NoteListRepository by lazy {
+        NoteListRepository(DAOs.noteListDao)
     }
 }

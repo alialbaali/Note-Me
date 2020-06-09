@@ -11,7 +11,7 @@ interface UserIdDao {
     @Insert
     suspend fun insertUserId(userId: UserId)
 
-    @Query("SELECT * FROM userId LIMIT 1")
+    @Query("SELECT * FROM user_ids LIMIT 1")
     suspend fun getUserId(): UserId
 
 }

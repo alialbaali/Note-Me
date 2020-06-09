@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+            android:id="@+id/list_group"
+            android:enabled="true">
+
+        <item
+                android:id="@+id/add_list_item"
+                android:icon="@drawable/ic_playlist_add_black_24dp"
+                android:title="@string/add_new_list" />
+
+        <item
+                android:id="@+id/default_list"
+                android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                android:title="@string/default_list" />
+
+    </group>
+
+    <group
+            android:id="@+id/settings_group"
+            android:enabled="true">
+        <item
+                android:id="@+id/settings_item"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/settings" />
+    </group>
+</menu>
